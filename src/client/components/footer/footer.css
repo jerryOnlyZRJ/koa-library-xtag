@@ -1,0 +1,10 @@
+:root {
+    --mainColor: #188eee;
+}
+
+/* PostCSS中，&选择符不能直接开头 */
+.widgets-footer {
+    & span {
+        color: var(--mainColor);
+    }
+}

@@ -1,0 +1,10 @@
+{% extends '../../common/layout.html' %}
+{% block title %} Welcome  [[ name ]] {% endblock%}
+{% block head %}{% endblock %}
+{% block styles %}<!--injectcss-->{% endblock %}
+{% block content %}
+	{% include '../../../components/topbanner/topbanner.html' %}
+	<p> username: [[ name ]] </p><p> Welcome: [[ data ]] </p>
+	{% include '../../../components/footer/footer.html' %}
+{% endblock %}
+{% block scripts %}<!--injectjs-->{% endblock %}
