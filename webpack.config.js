@@ -14,6 +14,7 @@ const htmlAfterWebpackPlugin = require('./build/webpackPlugins/htmlAfterWebpackP
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 图片压缩插件
 const tinyPngWebpackPlugin = require('tinypng-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 // CSS tree-shaking
 // const PurifyCSSPlugin = require('purifycss-webpack');
@@ -238,6 +239,10 @@ let _localConfig = {
         // }),
         ..._htmlPlugins,
         new htmlAfterWebpackPlugin(),
+        new CopyWebpackPlugin([ {
+            from: 'src/client/public',
+            to: './'
+        } ])
     ]
 }
 

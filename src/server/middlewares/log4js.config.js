@@ -2,7 +2,6 @@ import log4js from "log4js";
 import path from "path";
 
 log4js.configure({
-  // 定义输出形式
   appenders: {
     cheese: {
       type: "file",
@@ -15,8 +14,6 @@ log4js.configure({
       }
     }
   },
-  // 定义分组，可以拼凑不同的输出格式
-  // 供log4js.getLogger()函数选择
   categories: {
     default: {
       appenders: ["out"],

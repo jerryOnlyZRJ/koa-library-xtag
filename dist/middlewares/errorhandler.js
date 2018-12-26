@@ -11,9 +11,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /**
  * @description 容错机制中间件
- * @author Jerry
+ * @author Ranjay
  */
-const logger = _log4jsConfig.default.getLogger("mix");
+const logger = _log4jsConfig.default.getLogger('mix');
 /**
  * 容错处理对象
  * @type {Object}
@@ -41,7 +41,7 @@ const errorHandler = {
       await next();
       if (ctx.status !== 404) return;
       ctx.status = 404;
-      ctx.body = await ctx.render("common/404");
+      ctx.body = await ctx.render('common/404');
     });
   }
 
