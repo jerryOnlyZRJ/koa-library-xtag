@@ -2,12 +2,13 @@
 <html lang="en-US">
 
 <head>
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <link rel="dns-prefetch" href="https://cdn.bootcss.com/">
+    <link rel="dns-prefetch" href="https://cdn.polyfill.io/">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
-
     <link href="/styles/bootstrap.css" rel="stylesheet">
     <link href="/styles/site.css" rel="stylesheet">
     {% block styles %}{% endblock %}
@@ -52,10 +53,10 @@
         </div>
     </footer>
 
-    <script src="/scripts/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script src="/scripts/yii.js"></script>
-    <script src="/scripts/bootstrap.js"></script>
-    <script src="/scripts/system.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/systemjs/2.1.1/system.min.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
     <script type="module">
         import debounce from '/scripts/debounce.js'

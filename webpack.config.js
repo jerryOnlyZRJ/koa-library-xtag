@@ -240,7 +240,7 @@ let _localConfig = {
         ..._htmlPlugins,
         new htmlAfterWebpackPlugin(),
         new CopyWebpackPlugin([ {
-            from: 'src/client/public',
+            from: 'src/client/assets',
             to: './'
         } ])
     ]
