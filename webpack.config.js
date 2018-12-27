@@ -216,7 +216,7 @@ let _localConfig = {
             }]
         }),
         new ManifestPlugin({
-            fileName: '../manifest.json'
+            fileName: '../assets/manifest.json'
         }),
         new tinyPngWebpackPlugin({
             key: globProjectConfig.tinyPngPrivateKey, //can be Array, eg:['your key 1','your key 2'....]
