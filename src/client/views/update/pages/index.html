@@ -1,15 +1,20 @@
-{% extends './layout.html' %}
-{% block title %}Create{% endblock %}
+{% extends '../../common/layout.html' %}
+{% block title %}Update{% endblock %}
 {% block content %}
-<div class="country-create">
-    <h1>Create Book</h1>
+<div class="country-update">
+    <h1>Update Book: {{data.name}}</h1>
     <div class="country-form">
-        {% for item in fields %}
+        {% for item in data %}
+        {% if loop.key === "id" %}
+        <input id="book-id" type="text" hidden value="{{item}}">
+        {% else %}
         <div class="form-group field-country-code required">
-            <label class="control-label" for="country-code">{{ item }}</label>
-            <input type="text" id="country-code" class="form-control" name="{{ item }}" aria-required="true">
+            <label class="control-label" for="country-code">{{ loop.key }}</label>
+            <input type="text" id="country-code" class="form-control" name="{{ loop.key }}" value="{{ item }}"
+                aria-required="true">
             <div class="help-block"></div>
         </div>
+        {% endif %}
         {% endfor %}
         <div class="form-group">
             <button type="submit" class="btn btn-success">Save</button> </div>
@@ -19,6 +24,7 @@
 {% block scripts %}
 <script src="/scripts/yii.validation.js"></script>
 <script src="/scripts/yii.activeForm.js"></script>
+<script defer src="/scripts/update.js"></script>
 <script>
     jQuery(function ($) {
         jQuery('#w0').yiiActiveForm([{
@@ -84,5 +90,4 @@
         }], []);
     });
 </script>
-<script defer src="/scripts/create.js"></script>
 {% endblock %}
