@@ -21,11 +21,6 @@
     "scripty": {
         "parallel": true
     },
-    // "husky": {
-    //     "hooks": {
-    //         "pre-commit": "lint-staged"
-    //     }
-    // },
     "author": "920997736@qq.com",
     "license": "ISC",
     "lint-staged": {
