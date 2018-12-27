@@ -19,21 +19,21 @@ router.get("/", async ctx => {
 
 // 配置拓展路由
 router.get("/create", async ctx => {
-  ctx.body = await ctx.render("create", {
+  ctx.body = await ctx.render("create/pages/index", {
     fields
   });
 });
 
 // 配置拓展路由
 router.get("/view", async ctx => {
-  ctx.body = await ctx.render("view", {
+  ctx.body = await ctx.render("view/pages/index", {
     data: await bookModel.actionView(ctx.query.id)
   });
 });
 
 // 配置与models配合的数据路由
 router.get("/update", async ctx => {
-  ctx.body = await ctx.render("update", {
+  ctx.body = await ctx.render("update/pages/index", {
     data: await bookModel.actionView(ctx.query.id)
   });
 });
