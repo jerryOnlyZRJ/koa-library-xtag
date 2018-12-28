@@ -216,7 +216,11 @@ let _localConfig = {
             }]
         }),
         new ManifestPlugin({
-            fileName: '../assets/manifest.json'
+            fileName: '../assets/manifest.json',
+            filter: fileDescriptor => {
+                // 过滤copy-webpack-plugin生成的结果
+                return fileDescriptor.isInitial && fileDescriptor.isChunk
+            }
         }),
         new tinyPngWebpackPlugin({
             key: globProjectConfig.tinyPngPrivateKey, //can be Array, eg:['your key 1','your key 2'....]
@@ -230,7 +234,7 @@ let _localConfig = {
             dry: false
         }),
         new MiniCssExtractPlugin({
-            filename: 'styles/[name].[hash:5].css',
+            filename: 'styles/[name].[hash:5].css'
         }),
         // CSS tree-shaking
         // new PurifyCSSPlugin({
