@@ -1,5 +1,7 @@
 import request from "request-promise";
-const { api } = require("../config");
+const {
+  api
+} = require('../config').default
 
 class IndexModel {
   actionIndex() {

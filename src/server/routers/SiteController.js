@@ -12,16 +12,25 @@ const bookModel = new BookModel();
 // 配置根路由
 router.get("/", async ctx => {
   // ctx.router available
-  ctx.body = await ctx.render("index/pages/index", {
-    data: await bookModel.actionIndex()
-  });
+  const booksData = await bookModel.actionIndex()
+  if (ctx.header['x-pjax']) {
+    ctx.body = `<x-index books-data='${JSON.stringify(booksData)}'></x-index>`
+  } else {
+    ctx.body = await ctx.render("index/pages/index", {
+      data: booksData
+    })
+  }
 });
 
 // 配置拓展路由
 router.get("/create", async ctx => {
-  ctx.body = await ctx.render("create/pages/index", {
-    fields
-  });
+  if(ctx.header['x-pjax']){
+    ctx.body = '<x-create></x-create>'
+  }else {
+    ctx.body = await ctx.render("create/pages/index", {
+      fields
+    });
+  }
 });
 
 // 配置拓展路由
