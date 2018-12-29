@@ -107,6 +107,104 @@ xtag.create('x-create', class extends XTagElement {
             <div class="form-group">
                 <button type="submit" class="btn btn-success">Save</button> </div>
         </div>
+        <script async src="/scripts/yii.validation.js"></script>
+<script async src="/scripts/yii.activeForm.js"></script>
+<script>
+    jQuery(function ($) {
+        jQuery('#w0').yiiActiveForm([{
+            "id": "book-name",
+            "name": "name",
+            "container": ".field-book-name",
+            "input": "#book-name",
+            "validate": function (attribute, value, messages, deferred, $form) {
+                yii.validation.required(value, messages, {
+                    "message": "书名 cannot be blank."
+                });
+                yii.validation.string(value, messages, {
+                    "message": "书名 must be a string.",
+                    "max": 50,
+                    "tooLong": "书名 should contain at most 50 characters.",
+                    "skipOnEmpty": 1
+                });
+            }
+        }, {
+            "id": "book-author",
+            "name": "author",
+            "container": ".field-book-author",
+            "input": "#book-author",
+            "validate": function (attribute, value, messages, deferred, $form) {
+                yii.validation.required(value, messages, {
+                    "message": "作者 cannot be blank."
+                });
+                yii.validation.string(value, messages, {
+                    "message": "作者 must be a string.",
+                    "max": 50,
+                    "tooLong": "作者 should contain at most 50 characters.",
+                    "skipOnEmpty": 1
+                });
+            }
+        }, {
+            "id": "book-date",
+            "name": "date",
+            "container": ".field-book-date",
+            "input": "#book-date",
+            "validate": function (attribute, value, messages, deferred, $form) {
+                yii.validation.required(value, messages, {
+                    "message": "出版日期 cannot be blank."
+                });
+                yii.validation.string(value, messages, {
+                    "message": "出版日期 must be a string.",
+                    "max": 50,
+                    "tooLong": "出版日期 should contain at most 50 characters.",
+                    "skipOnEmpty": 1
+                });
+            }
+        }, {
+            "id": "book-score",
+            "name": "score",
+            "container": ".field-book-score",
+            "input": "#book-score",
+            "validate": function (attribute, value, messages, deferred, $form) {
+                yii.validation.number(value, messages, {
+                    "pattern": /^\s*[+-]?\d+\s*$/,
+                    "message": "评分 must be an integer.",
+                    "skipOnEmpty": 1
+                });
+            }
+        }], []);
+    });
+    </div>
+    `
+    }
+});
+xtag.create('x-update', class extends XTagElement {
+    set 'bookData::attr'(value) {
+        // X-Tag automatically maps camel cased getter/setter names to their
+        // dashed attribute equivalents. In this example, the `maxVolume` 
+        // getter/setter pair maps to the `max-volume` attribute.
+        const bookData = JSON.parse(value)
+        this.bookName = bookData.name
+        this.bookDetails = ''
+        Object.keys(bookData).map(key => {
+            if(key === "id"){
+                this.bookDetails += `<input id="book-id" type="text" hidden value="${bookData[key]}">`
+            }
+            this.bookDetails += `<div class="form-group field-country-code required">
+            <label class="control-label" for="country-code">${key}</label>
+            <input type="text" id="country-code" class="form-control" name="${key}" value="${bookData[key]}"
+                aria-required="true">
+            <div class="help-block"></div>
+        </div>`
+        })
+    }
+    '::template(true)'() {
+        return `<div class="country-update">
+        <h1>Update Book: ${this.bookName}</h1>
+        <div class="country-form">
+            ${this.bookDetails}
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Save</button> </div>
+        </div>
     </div>`
     }
 });

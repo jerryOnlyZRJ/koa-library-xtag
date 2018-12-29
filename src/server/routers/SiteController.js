@@ -24,9 +24,9 @@ router.get("/", async ctx => {
 
 // 配置拓展路由
 router.get("/create", async ctx => {
-  if(ctx.header['x-pjax']){
+  if (ctx.header['x-pjax']) {
     ctx.body = '<x-create></x-create>'
-  }else {
+  } else {
     ctx.body = await ctx.render("create/pages/index", {
       fields
     });
@@ -42,9 +42,14 @@ router.get("/view", async ctx => {
 
 // 配置与models配合的数据路由
 router.get("/update", async ctx => {
-  ctx.body = await ctx.render("update/pages/index", {
-    data: await bookModel.actionView(ctx.query.id)
-  });
-});
+  const bookData = await bookModel.actionView(ctx.query.id)
+  if (ctx.header['x-pjax']) {
+    ctx.body = `<x-update book-data='${JSON.stringify(bookData)}'></x-update>`
+  } else {
+    ctx.body = await ctx.render("update/pages/index", {
+      data: bookData
+    })
+  }
+})
 
 export default router;
