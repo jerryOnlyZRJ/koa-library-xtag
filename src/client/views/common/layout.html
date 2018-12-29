@@ -32,7 +32,7 @@
     <x-footer></x-footer>
 
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/scripts/yii.js"></script>
+    <script async src="/scripts/yii.js"></script>
     <script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
     <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
@@ -45,7 +45,7 @@
         import debounce from '/scripts/debounce.js'
         window.debounce = debounce
     </script>
-    <script nomodule  src="https://cdn.bootcss.com/systemjs/2.1.1/system.min.js"></script>
+    <script nomodule src="https://cdn.bootcss.com/systemjs/2.1.1/system.min.js"></script>
     <script nomodule>
         // 需要利用webpack插件将ES6 Module编译为System.register格式
         System.import('/scripts/debounce.systemjs.js').then(module => {

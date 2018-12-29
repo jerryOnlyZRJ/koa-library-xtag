@@ -31,7 +31,7 @@
             </thead>
             <tbody>
                 {% for item in data %}
-                <tr data-key="item.id">
+                <tr data-key="{{ item.id }}">
                     <td>{{ loop.index }}</td>
                     {% for value in item %}
                     <td>{{ value }}</td>
