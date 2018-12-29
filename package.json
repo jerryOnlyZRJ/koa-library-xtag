@@ -16,7 +16,8 @@
         "test:unit": "scripty",
         "test:e2e": "scripty",
         "tools:webpack-chart": "scripty",
-        "tools:docs": "scripty"
+        "tools:docs": "scripty",
+        "babel": "babel src/client/assets/scripts/debounce.js -o src/client/assets/scripts/debounce.systemjs.js --plugins=@babel/plugin-transform-modules-systemjs"
     },
     "scripty": {
         "parallel": true
@@ -47,15 +48,17 @@
         "pm2": "^3.2.4"
     },
     "devDependencies": {
+        "@babel/cli": "^7.0.0",
         "@babel/core": "^7.2.2",
         "@babel/plugin-proposal-decorators": "^7.2.3",
         "@babel/plugin-transform-modules-commonjs": "^7.2.0",
+        "@babel/plugin-transform-modules-systemjs": "^7.2.0",
         "@babel/plugin-transform-runtime": "^7.2.0",
         "@babel/preset-env": "^7.2.3",
         "@babel/runtime": "^7.2.0",
         "autoprefixer": "^9.4.3",
-        "babel-core": "^7.0.0-bridge.0",
         "babel-eslint": "^9.0.0",
+        "babel-jest": "^23.4.2",
         "babel-loader": "^8.0.0",
         "clean-webpack-plugin": "^0.1.19",
         "code-metrics-loader": "^1.0.0",
