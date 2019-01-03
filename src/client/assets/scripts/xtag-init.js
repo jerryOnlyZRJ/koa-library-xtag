@@ -177,6 +177,37 @@ xtag.create('x-create', class extends XTagElement {
     `
     }
 });
+xtag.create('x-view', class extends XTagElement {
+    set 'bookData::attr'(value) {
+        // X-Tag automatically maps camel cased getter/setter names to their
+        // dashed attribute equivalents. In this example, the `maxVolume` 
+        // getter/setter pair maps to the `max-volume` attribute.
+        const bookData = JSON.parse(value)
+        this.bookId = bookData.id
+        this.bookName = bookData.name
+        this.bookDetails = ''
+        Object.keys(bookData).map(key => {
+            this.bookDetails += `<tr>
+            <th>${key}</th>
+            <td>${bookData[key]}</td>
+        </tr>`
+        })
+    }
+    '::template(true)'() {
+        return `<div class="country-view">
+        <h1>${this.bookName}</h1>
+        <p>
+            <a class="btn btn-primary" href="/update?id=${this.bookId}">Update</a>
+            <a class="btn btn-danger" href="/api/delete?id=${this.bookId}" data-confirm="Are you sure you want to delete this item?" data-method="post">Delete</a>
+        </p>
+        <table id="w0" class="table table-striped table-bordered detail-view">
+            <tbody>
+             ${this.bookDetails}
+            </tbody>
+        </table>
+    </div>`
+    }
+});
 xtag.create('x-update', class extends XTagElement {
     set 'bookData::attr'(value) {
         // X-Tag automatically maps camel cased getter/setter names to their
@@ -186,7 +217,7 @@ xtag.create('x-update', class extends XTagElement {
         this.bookName = bookData.name
         this.bookDetails = ''
         Object.keys(bookData).map(key => {
-            if(key === "id"){
+            if (key === "id") {
                 this.bookDetails += `<input id="book-id" type="text" hidden value="${bookData[key]}">`
             }
             this.bookDetails += `<div class="form-group field-country-code required">
@@ -205,6 +236,73 @@ xtag.create('x-update', class extends XTagElement {
             <div class="form-group">
                 <button type="submit" class="btn btn-success">Save</button> </div>
         </div>
+        <script src="/scripts/yii.validation.js"></script>
+<script src="/scripts/yii.activeForm.js"></script>
+<script>
+    jQuery(function ($) {
+        jQuery('#w0').yiiActiveForm([{
+            "id": "book-name",
+            "name": "name",
+            "container": ".field-book-name",
+            "input": "#book-name",
+            "validate": function (attribute, value, messages, deferred, $form) {
+                yii.validation.required(value, messages, {
+                    "message": "书名 cannot be blank."
+                });
+                yii.validation.string(value, messages, {
+                    "message": "书名 must be a string.",
+                    "max": 50,
+                    "tooLong": "书名 should contain at most 50 characters.",
+                    "skipOnEmpty": 1
+                });
+            }
+        }, {
+            "id": "book-author",
+            "name": "author",
+            "container": ".field-book-author",
+            "input": "#book-author",
+            "validate": function (attribute, value, messages, deferred, $form) {
+                yii.validation.required(value, messages, {
+                    "message": "作者 cannot be blank."
+                });
+                yii.validation.string(value, messages, {
+                    "message": "作者 must be a string.",
+                    "max": 50,
+                    "tooLong": "作者 should contain at most 50 characters.",
+                    "skipOnEmpty": 1
+                });
+            }
+        }, {
+            "id": "book-date",
+            "name": "date",
+            "container": ".field-book-date",
+            "input": "#book-date",
+            "validate": function (attribute, value, messages, deferred, $form) {
+                yii.validation.required(value, messages, {
+                    "message": "出版日期 cannot be blank."
+                });
+                yii.validation.string(value, messages, {
+                    "message": "出版日期 must be a string.",
+                    "max": 50,
+                    "tooLong": "出版日期 should contain at most 50 characters.",
+                    "skipOnEmpty": 1
+                });
+            }
+        }, {
+            "id": "book-score",
+            "name": "score",
+            "container": ".field-book-score",
+            "input": "#book-score",
+            "validate": function (attribute, value, messages, deferred, $form) {
+                yii.validation.number(value, messages, {
+                    "pattern": /^\s*[+-]?\d+\s*$/,
+                    "message": "评分 must be an integer.",
+                    "skipOnEmpty": 1
+                });
+            }
+        }], []);
+    });
+</script>
     </div>`
     }
 });

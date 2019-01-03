@@ -26,4 +26,4 @@ router.post("/update", async ctx => {
   ctx.body = await bookModel.actionUpdate(ctx.request.body);
 });
 
-export default router;
+export default router
