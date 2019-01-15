@@ -1,6 +1,7 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
+    watch: true,
     plugins: [
         new CopyWebpackPlugin([{
             from: 'src/client/views/common/layout.html',

@@ -2,6 +2,12 @@ import Router from "koa-router";
 import BookModel from "../models/Book";
 import BookController from "./BookController";
 import LogController from "./LogController";
+import manifest from '../assets/manifest.json'
+
+let scripts = {}
+Object.keys(manifest).map(item => {
+  scripts[item.split('-')[0]] = `<script defer src="${manifest[item]}"></script>`
+})
 
 const fields = ["name", "author", "date", "score"];
 
@@ -16,7 +22,7 @@ router.get("/", async ctx => {
   // ctx.router available
   const booksData = await bookModel.actionIndex()
   if (ctx.header['x-pjax']) {
-    ctx.body = `<x-index books-data='${JSON.stringify(booksData)}'></x-index>`
+    ctx.body = `<x-index books-data='${JSON.stringify(booksData)}'></x-index>` + scripts["index"]
   } else {
     ctx.body = await ctx.render("index/pages/index", {
       data: booksData
@@ -27,7 +33,7 @@ router.get("/", async ctx => {
 // 配置拓展路由
 router.get("/create", async ctx => {
   if (ctx.header['x-pjax']) {
-    ctx.body = '<x-create></x-create>'
+    ctx.body = '<x-create></x-create>' + scripts["create"]
   } else {
     ctx.body = await ctx.render("create/pages/index", {
       fields
@@ -39,7 +45,7 @@ router.get("/create", async ctx => {
 router.get("/view", async ctx => {
   const bookData = await bookModel.actionView(ctx.query.id)
   if (ctx.header['x-pjax']) {
-    ctx.body = `<x-view book-data='${JSON.stringify(bookData)}'></x-view>`
+    ctx.body = `<x-view book-data='${JSON.stringify(bookData)}'></x-view>` + scripts["view"]
   } else {
     ctx.body = await ctx.render("view/pages/index", {
       data: bookData
@@ -51,7 +57,7 @@ router.get("/view", async ctx => {
 router.get("/update", async ctx => {
   const bookData = await bookModel.actionView(ctx.query.id)
   if (ctx.header['x-pjax']) {
-    ctx.body = `<x-update book-data='${JSON.stringify(bookData)}'></x-update>`
+    ctx.body = `<x-update book-data='${JSON.stringify(bookData)}'></x-update>` + scripts["update"]
   } else {
     ctx.body = await ctx.render("update/pages/index", {
       data: bookData

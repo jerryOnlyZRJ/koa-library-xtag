@@ -24,7 +24,7 @@ app.context.render = co.wrap(
   render({
     root: config.viewPath,
     autoescape: true,
-    cache: "memory", // disable, set to false
+    cache: config.swigCache, // disable, set to false
     ext: "html",
     writeBody: false
   })

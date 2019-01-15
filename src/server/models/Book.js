@@ -1,19 +1,17 @@
 import request from "request-promise";
-const {
-  api
-} = require('../config').default
+import config from "../config"
 
 class IndexModel {
   actionIndex() {
-    return request(`${api}/index.php`).then(data => JSON.parse(data));
+    return request(`${config.api}/index.php`).then(data => JSON.parse(data));
   }
   actionView(id) {
-    return request(`${api}/view.php?id=${id}`).then(data => JSON.parse(data));
+    return request(`${config.api}/view.php?id=${id}`).then(data => JSON.parse(data));
   }
   actionCreate(body) {
     const options = {
       method: "POST",
-      uri: `${api}/create.php`,
+      uri: `${config.api}/create.php`,
       body: body,
       json: true // Automatically stringifies the body to JSON
     };
@@ -22,7 +20,7 @@ class IndexModel {
   actionUpdate(body) {
     const options = {
       method: "POST",
-      uri: `${api}/update.php`,
+      uri: `${config.api}/update.php`,
       body: body,
       json: true
     };
@@ -31,7 +29,7 @@ class IndexModel {
   actionDelete(body) {
     const options = {
       method: "POST",
-      uri: `${api}/delete.php`,
+      uri: `${config.api}/delete.php`,
       body: body,
       json: true
     };

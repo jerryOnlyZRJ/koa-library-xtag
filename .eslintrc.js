@@ -7,7 +7,9 @@ module.exports = {
         "browser": true,
     },
     "globals": {
-        "$": false //浏览器的全局变量
+        "$": false,
+        "xtag": false,
+        "XTagElement": false
     },
     "parserOptions": {
         "ecmaVersion": 6,
