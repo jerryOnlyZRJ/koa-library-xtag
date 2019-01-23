@@ -1,18 +1,6 @@
-/**
- * Yii validation module.
- *
- * This JavaScript module provides the validation methods for the built-in validators.
- *
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
-
-yii.validation = (function($) {
+yii.validation = (function ($) {
   var pub = {
-    isEmpty: function(value) {
+    isEmpty: function (value) {
       return (
         value === null ||
         value === undefined ||
@@ -20,12 +8,11 @@ yii.validation = (function($) {
         value === ""
       );
     },
-
-    addMessage: function(messages, message, value) {
+    addMessage: function (messages, message, value) {
       messages.push(message.replace(/\{value\}/g, value));
     },
 
-    required: function(value, messages, options) {
+    required: function (value, messages, options) {
       var valid = false;
       if (options.requiredValue === undefined) {
         var isString = typeof value == "string" || value instanceof String;
@@ -48,7 +35,7 @@ yii.validation = (function($) {
     },
 
     // "boolean" is a reserved keyword in older versions of ES so it's quoted for IE < 9 support
-    boolean: function(value, messages, options) {
+    boolean: function (value, messages, options) {
       if (options.skipOnEmpty && pub.isEmpty(value)) {
         return;
       }
@@ -63,7 +50,7 @@ yii.validation = (function($) {
       }
     },
 
-    string: function(value, messages, options) {
+    string: function (value, messages, options) {
       if (options.skipOnEmpty && pub.isEmpty(value)) {
         return;
       }
@@ -85,16 +72,16 @@ yii.validation = (function($) {
       }
     },
 
-    file: function(attribute, messages, options) {
+    file: function (attribute, messages, options) {
       var files = getUploadedFiles(attribute, messages, options);
-      $.each(files, function(i, file) {
+      $.each(files, function (i, file) {
         validateFile(file, messages, options);
       });
     },
 
-    image: function(attribute, messages, options, deferredList) {
+    image: function (attribute, messages, options, deferredList) {
       var files = getUploadedFiles(attribute, messages, options);
-      $.each(files, function(i, file) {
+      $.each(files, function (i, file) {
         validateFile(file, messages, options);
 
         // Skip image validation if FileReader API is not available
@@ -115,7 +102,7 @@ yii.validation = (function($) {
       });
     },
 
-    validateImage: function(
+    validateImage: function (
       file,
       messages,
       options,
@@ -123,29 +110,29 @@ yii.validation = (function($) {
       fileReader,
       image
     ) {
-      image.onload = function() {
+      image.onload = function () {
         validateImageSize(file, image, messages, options);
         deferred.resolve();
       };
 
-      image.onerror = function() {
+      image.onerror = function () {
         messages.push(options.notImage.replace(/\{file\}/g, file.name));
         deferred.resolve();
       };
 
-      fileReader.onload = function() {
+      fileReader.onload = function () {
         image.src = this.result;
       };
 
       // Resolve deferred if there was error while reading data
-      fileReader.onerror = function() {
+      fileReader.onerror = function () {
         deferred.resolve();
       };
 
       fileReader.readAsDataURL(file);
     },
 
-    number: function(value, messages, options) {
+    number: function (value, messages, options) {
       if (options.skipOnEmpty && pub.isEmpty(value)) {
         return;
       }
@@ -163,7 +150,7 @@ yii.validation = (function($) {
       }
     },
 
-    range: function(value, messages, options) {
+    range: function (value, messages, options) {
       if (options.skipOnEmpty && pub.isEmpty(value)) {
         return;
       }
@@ -175,7 +162,7 @@ yii.validation = (function($) {
 
       var inArray = true;
 
-      $.each($.isArray(value) ? value : [value], function(i, v) {
+      $.each($.isArray(value) ? value : [value], function (i, v) {
         if ($.inArray(v, options.range) == -1) {
           inArray = false;
           return false;
@@ -193,7 +180,7 @@ yii.validation = (function($) {
       }
     },
 
-    regularExpression: function(value, messages, options) {
+    regularExpression: function (value, messages, options) {
       if (options.skipOnEmpty && pub.isEmpty(value)) {
         return;
       }
@@ -206,7 +193,7 @@ yii.validation = (function($) {
       }
     },
 
-    email: function(value, messages, options) {
+    email: function (value, messages, options) {
       if (options.skipOnEmpty && pub.isEmpty(value)) {
         return;
       }
@@ -245,7 +232,7 @@ yii.validation = (function($) {
       }
     },
 
-    url: function(value, messages, options) {
+    url: function (value, messages, options) {
       if (options.skipOnEmpty && pub.isEmpty(value)) {
         return;
       }
@@ -271,7 +258,7 @@ yii.validation = (function($) {
       }
     },
 
-    trim: function($form, attribute, options, value) {
+    trim: function ($form, attribute, options, value) {
       var $input = $form.find(attribute.input);
       if ($input.is(":checkbox, :radio")) {
         return value;
@@ -286,7 +273,7 @@ yii.validation = (function($) {
       return value;
     },
 
-    captcha: function(value, messages, options) {
+    captcha: function (value, messages, options) {
       if (options.skipOnEmpty && pub.isEmpty(value)) {
         return;
       }
@@ -303,7 +290,7 @@ yii.validation = (function($) {
       }
     },
 
-    compare: function(value, messages, options, $form) {
+    compare: function (value, messages, options, $form) {
       if (options.skipOnEmpty && pub.isEmpty(value)) {
         return;
       }
@@ -359,7 +346,7 @@ yii.validation = (function($) {
       }
     },
 
-    ip: function(value, messages, options) {
+    ip: function (value, messages, options) {
       if (options.skipOnEmpty && pub.isEmpty(value)) {
         return;
       }
@@ -444,9 +431,9 @@ yii.validation = (function($) {
   function validateFile(file, messages, options) {
     if (options.extensions && options.extensions.length > 0) {
       var index = file.name.lastIndexOf(".");
-      var ext = !~index
-        ? ""
-        : file.name.substr(index + 1, file.name.length).toLowerCase();
+      var ext = !~index ?
+        "" :
+        file.name.substr(index + 1, file.name.length).toLowerCase();
 
       if (!~options.extensions.indexOf(ext)) {
         messages.push(options.wrongExtension.replace(/\{file\}/g, file.name));
