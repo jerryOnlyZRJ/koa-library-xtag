@@ -1,25 +1,3 @@
-var inputs = document.querySelectorAll('.form-group input[type="text"]');
-var submitBtn = document.querySelector(".btn.btn-success");
-var clickHandler = window.debounce(function () {
-    var data = {};
-    data.id = document.getElementById("book-id").value;
-    inputs.forEach(function (item) {
-        data[item.name] = item.value;
-    });
-    fetch("/api/update", {
-            method: "POST",
-            headers: new Headers({
-                "Content-Type": "application/json" // 指定提交方式为表单提交
-            }),
-            body: JSON.stringify(data)
-        })
-        .then(() => {
-            location.href = "/";
-        })
-        .catch(console.log);
-});
-submitBtn.addEventListener("click", clickHandler);
-
 xtag.create('x-update', class extends XTagElement {
     set 'bookData::attr'(value) {
         // X-Tag automatically maps camel cased getter/setter names to their
@@ -46,8 +24,32 @@ xtag.create('x-update', class extends XTagElement {
         <div class="country-form">
             ${this.bookDetails}
             <div class="form-group">
-                <button type="submit" class="btn btn-success">Save</button> </div>
+                <button type="submit" id="submit-btn" class="btn btn-success">Save</button> </div>
         </div>
 `
+    }
+    'click::event'(e) {
+        if (e.target.id === "submit-btn") {
+            var inputs = document.querySelectorAll('.form-group input[type="text"]');
+            var clickHandler = (function () {
+                var data = {};
+                data.id = document.getElementById("book-id").value;
+                inputs.forEach(function (item) {
+                    data[item.name] = item.value;
+                });
+                fetch("/api/update", {
+                        method: "POST",
+                        headers: new Headers({
+                            "Content-Type": "application/json" // 指定提交方式为表单提交
+                        }),
+                        body: JSON.stringify(data)
+                    })
+                    .then(() => {
+                        location.href = "/";
+                    })
+                    .catch(console.log);
+            });
+            clickHandler(e)
+        }
     }
 });

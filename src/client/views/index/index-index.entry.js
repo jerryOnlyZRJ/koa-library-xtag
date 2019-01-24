@@ -1,4 +1,4 @@
-var clickHandler = window.debounce(function () {
+var clickHandler = (function () {
     location.href = "/";
 });
 

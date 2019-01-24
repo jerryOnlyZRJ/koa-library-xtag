@@ -37,7 +37,7 @@
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
     <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
     <script>
-        $(document).pjax('a', '#pjax-container')
+        $(document).pjax('a:not([data-method])', '#pjax-container')
     </script>
     <script src="https://cdn.bootcss.com/x-tag/2.0.9-alpha/x-tag-polyfilled.min.js"></script>
     <script type="module">
