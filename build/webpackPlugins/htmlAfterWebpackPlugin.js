@@ -2,7 +2,7 @@ const pluginName = 'htmlAfterWebpackPlugin';
 const assetsHelp = (data)=>{
     let css=[],js= []; 
     const dir ={
-        js:item=>`<script defer src="${item}"></script>`,
+        js:item=>`<script>activeJS("${item}")</script>`,
         css:item=>`<link rel="stylesheet" href="${item}">`
     };
     for(let jsitem of data.js){
