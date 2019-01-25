@@ -40,7 +40,35 @@
         $(document).pjax('a:not([data-method])', '#pjax-container')
     </script>
     <script src="https://cdn.bootcss.com/x-tag/2.0.9-alpha/x-tag-polyfilled.min.js"></script>
-    <script type="module">
+    <script id="activejs-container"></script>
+    <script>
+        var activejsContainer = document.getElementById("activejs-container")
+        fetch('/manifest.json').then(res => res.json()).then(data => {
+            if (!localStorage["manifest.json"]) {
+                localStorage.setItem("manifest.json", JSON.stringify(data))
+                Object.values(data).map(fileUrl => {
+                    fetch(fileUrl).then(res => res.text()).then(fileData => {
+                        localStorage.setItem(fileUrl, fileData)
+                    })
+                })
+            } else {
+                var oldManifest = JSON.stringify(localStorage.getItem("manifest.json"))
+                Object.keys(data).map(file => {
+                    if (data[file] !== oldManifest[file]) {
+                        fetch(data[file]).then(res => res.text()).then(fileData => {
+                            localStorage.setItem(data[file], fileData)
+                            localStorage.removeItem(oldManifest[file])
+                        })
+                    }
+                })
+            }
+        })
+
+        function activeJS(url) {
+            activejsContainer.innerHTML = localStorage.getItem(url)
+        }
+    </script>
+    <!-- <script type="module">
         import debounce from '/scripts/debounce.js'
         window.debounce = debounce
     </script>
@@ -50,7 +78,7 @@
         System.import('/scripts/debounce.systemjs.js').then(module => {
             window.debounce = module.default
         })
-    </script>
+    </script> -->
     {% block scripts %}{% endblock %}
 
 </body>

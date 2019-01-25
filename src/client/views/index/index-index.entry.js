@@ -1,7 +1,3 @@
-var clickHandler = (function () {
-    location.href = "/";
-});
-
 xtag.create('x-index', class extends XTagElement {
     set 'booksData::attr'(value) {
         // X-Tag automatically maps camel cased getter/setter names to their
@@ -27,7 +23,7 @@ xtag.create('x-index', class extends XTagElement {
             e.target.parentNode.title === "Delete" ||
             e.target.parentNode.parentNode.title === "Delete"
         ) {
-            clickHandler(e);
+            location.href = "/";
         }
     }
     '::template(true)'() {
