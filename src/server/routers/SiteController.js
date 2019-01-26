@@ -6,7 +6,7 @@ import manifest from '../assets/manifest.json'
 
 let scripts = {}
 Object.keys(manifest).map(item => {
-  scripts[item.split('-')[0]] = `<script>avtiveJS("${manifest[item]}")</script>`
+  scripts[item.split('-')[0]] = `<script>activeJS("${manifest[item]}")</script>`
 })
 
 const fields = ["name", "author", "date", "score"];

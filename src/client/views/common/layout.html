@@ -42,7 +42,6 @@
     <script src="https://cdn.bootcss.com/x-tag/2.0.9-alpha/x-tag-polyfilled.min.js"></script>
     <script id="activejs-container"></script>
     <script>
-        var activejsContainer = document.getElementById("activejs-container")
         fetch('/manifest.json').then(res => res.json()).then(data => {
             if (!localStorage["manifest.json"]) {
                 localStorage.setItem("manifest.json", JSON.stringify(data))
@@ -65,20 +64,15 @@
         })
 
         function activeJS(url) {
+            var activejsContainer = document.getElementById("activejs-container")
+            var containerParent = activejsContainer.parentNode
+            containerParent.removeChild(activejsContainer)
+            activejsContainer = document.createElement("script")
+            activejsContainer.id = 'activejs-container'
             activejsContainer.innerHTML = localStorage.getItem(url)
+            containerParent.appendChild(activejsContainer)
         }
     </script>
-    <!-- <script type="module">
-        import debounce from '/scripts/debounce.js'
-        window.debounce = debounce
-    </script>
-    <script nomodule src="https://cdn.bootcss.com/systemjs/2.1.1/system.min.js"></script>
-    <script nomodule>
-        // 需要利用webpack插件将ES6 Module编译为System.register格式
-        System.import('/scripts/debounce.systemjs.js').then(module => {
-            window.debounce = module.default
-        })
-    </script> -->
     {% block scripts %}{% endblock %}
 
 </body>
