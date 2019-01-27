@@ -62,16 +62,22 @@
                 })
             }
         })
-
-        function activeJS(url) {
-            var activejsContainer = document.getElementById("activejs-container")
-            var containerParent = activejsContainer.parentNode
-            containerParent.removeChild(activejsContainer)
-            activejsContainer = document.createElement("script")
-            activejsContainer.id = 'activejs-container'
-            activejsContainer.innerHTML = localStorage.getItem(url)
-            containerParent.appendChild(activejsContainer)
-        }
+        
+        var activeJS = (function () {
+            var activedJs = new Set
+            return function (url) {
+                if (!activedJs.has(url)) {
+                activedJs.add(url)
+                var activejsContainer = document.getElementById("activejs-container")
+                var containerParent = activejsContainer.parentNode
+                containerParent.removeChild(activejsContainer)
+                activejsContainer = document.createElement("script")
+                activejsContainer.id = 'activejs-container'
+                activejsContainer.innerHTML = localStorage.getItem(url)
+                containerParent.appendChild(activejsContainer)
+            }
+            }
+        })()
     </script>
     {% block scripts %}{% endblock %}
 
