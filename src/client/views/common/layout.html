@@ -51,7 +51,7 @@
                     })
                 })
             } else {
-                var oldManifest = JSON.stringify(localStorage.getItem("manifest.json"))
+                var oldManifest = JSON.parse(localStorage.getItem('manifest.json'))
                 Object.keys(data).map(file => {
                     if (data[file] !== oldManifest[file]) {
                         fetch(data[file]).then(res => res.text()).then(fileData => {
